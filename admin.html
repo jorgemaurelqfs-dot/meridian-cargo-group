@@ -1,0 +1,3923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08111f">
+<meta name="robots" content="noindex,nofollow">
+
+<title>Meridian Cargo Group — Admin Dashboard</title>
+
+<style>
+:root{
+    --navy:#07111f;
+    --navy2:#0b1728;
+    --navy3:#101f34;
+    --blue:#2f80ed;
+    --blue2:#4da3ff;
+    --gold:#d6a84f;
+    --green:#22c55e;
+    --orange:#f59e0b;
+    --red:#ef4444;
+    --purple:#8b5cf6;
+    --white:#ffffff;
+    --text:#172033;
+    --muted:#718096;
+    --border:#e6ebf2;
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --shadow:0 12px 35px rgba(7,17,31,.07);
+    --radius:16px;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+        Inter,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* =========================
+   SVG ICON SYSTEM
+========================= */
+
+.icon{
+    width:20px;
+    height:20px;
+    display:inline-block;
+    vertical-align:middle;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.icon-sm{
+    width:16px;
+    height:16px;
+}
+
+.icon-lg{
+    width:24px;
+    height:24px;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-screen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(47,128,237,.18), transparent 30%),
+        radial-gradient(circle at 85% 80%, rgba(214,168,79,.12), transparent 30%),
+        linear-gradient(135deg,#050c17,#0b1728 60%,#07111f);
+}
+
+.login-card{
+    width:100%;
+    max-width:460px;
+    background:rgba(255,255,255,.98);
+    border-radius:24px;
+    padding:42px;
+    box-shadow:0 35px 100px rgba(0,0,0,.35);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.brand-mark{
+    width:48px;
+    height:48px;
+    border-radius:13px;
+    background:linear-gradient(135deg,var(--gold),#f0ca73);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#08111f;
+    box-shadow:0 8px 20px rgba(214,168,79,.25);
+}
+
+.brand-mark svg{
+    width:28px;
+    height:28px;
+}
+
+.brand-name{
+    font-weight:800;
+    font-size:18px;
+    color:var(--navy);
+    letter-spacing:-.3px;
+}
+
+.brand-sub{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:2px;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+}
+
+.login-heading{
+    margin-top:38px;
+}
+
+.login-heading h1{
+    font-size:29px;
+    letter-spacing:-1px;
+    color:var(--navy);
+}
+
+.login-heading p{
+    margin-top:9px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.6;
+}
+
+.form-group{
+    margin-top:22px;
+}
+
+.form-label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    color:#344054;
+    margin-bottom:8px;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+.input-wrap .input-icon{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#94a3b8;
+}
+
+.input-wrap input{
+    padding-left:45px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--text);
+    border-radius:11px;
+    padding:12px 14px;
+    outline:none;
+    transition:.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(47,128,237,.1);
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.login-btn{
+    width:100%;
+    border:0;
+    margin-top:24px;
+    padding:14px;
+    border-radius:11px;
+    background:linear-gradient(135deg,var(--blue),#1769d1);
+    color:#fff;
+    font-weight:800;
+    box-shadow:0 10px 24px rgba(47,128,237,.25);
+    transition:.2s;
+}
+
+.login-btn:hover{
+    transform:translateY(-1px);
+}
+
+.security-note{
+    margin-top:22px;
+    padding:12px;
+    border-radius:10px;
+    background:#f5f8fc;
+    color:#667085;
+    font-size:11px;
+    line-height:1.5;
+}
+
+/* =========================
+   APP
+========================= */
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:255px;
+    background:var(--navy);
+    color:#fff;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    z-index:50;
+    display:flex;
+    flex-direction:column;
+    border-right:1px solid rgba(255,255,255,.05);
+}
+
+.sidebar-header{
+    padding:24px 20px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.sidebar .brand-name{
+    color:#fff;
+}
+
+.sidebar .brand-sub{
+    color:#8191a7;
+}
+
+.sidebar .brand-mark{
+    width:42px;
+    height:42px;
+}
+
+.nav{
+    padding:20px 13px;
+    flex:1;
+}
+
+.nav-section{
+    color:#64748b;
+    text-transform:uppercase;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1.4px;
+    padding:0 12px 9px;
+}
+
+.nav-item{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px;
+    border-radius:10px;
+    color:#aebbd0;
+    background:none;
+    border:0;
+    margin-bottom:4px;
+    text-align:left;
+    font-size:13px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.nav-item:hover{
+    background:rgba(255,255,255,.05);
+    color:#fff;
+}
+
+.nav-item.active{
+    background:rgba(47,128,237,.16);
+    color:#fff;
+}
+
+.nav-item.active .icon{
+    color:var(--blue2);
+}
+
+.sidebar-footer{
+    padding:16px;
+    border-top:1px solid rgba(255,255,255,.07);
+}
+
+.admin-profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#334155,#64748b);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:12px;
+}
+
+.admin-profile strong{
+    font-size:12px;
+}
+
+.admin-profile small{
+    color:#64748b;
+    font-size:10px;
+}
+
+.logout-btn{
+    width:100%;
+    margin-top:13px;
+    background:rgba(239,68,68,.08);
+    border:1px solid rgba(239,68,68,.15);
+    color:#fca5a5;
+    padding:9px;
+    border-radius:8px;
+    font-size:11px;
+    font-weight:700;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:255px;
+    flex:1;
+    min-width:0;
+}
+
+.topbar{
+    height:72px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:30;
+}
+
+.mobile-menu{
+    display:none;
+    border:0;
+    background:none;
+    color:var(--navy);
+}
+
+.page-title h2{
+    font-size:20px;
+    letter-spacing:-.4px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:2px;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.system-status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:11px;
+    font-weight:700;
+    color:#475467;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 0 4px rgba(34,197,94,.1);
+}
+
+.content{
+    padding:30px;
+    max-width:1600px;
+    margin:auto;
+}
+
+/* =========================
+   DASHBOARD CARDS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:17px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+}
+
+.stat-card::after{
+    content:"";
+    position:absolute;
+    right:-30px;
+    bottom:-35px;
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background:rgba(47,128,237,.04);
+}
+
+.stat-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.stat-icon{
+    width:42px;
+    height:42px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.stat-total .stat-icon{
+    color:var(--blue);
+    background:rgba(47,128,237,.09);
+}
+
+.stat-transit .stat-icon{
+    color:var(--purple);
+    background:rgba(139,92,246,.09);
+}
+
+.stat-hold .stat-icon{
+    color:var(--orange);
+    background:rgba(245,158,11,.1);
+}
+
+.stat-delivered .stat-icon{
+    color:var(--green);
+    background:rgba(34,197,94,.1);
+}
+
+.stat-label{
+    margin-top:18px;
+    color:var(--muted);
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+}
+
+.stat-value{
+    font-size:29px;
+    font-weight:850;
+    margin-top:4px;
+    color:var(--navy);
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+    margin-top:25px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+}
+
+.section-header{
+    padding:20px 22px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.section-title{
+    font-size:15px;
+    font-weight:800;
+    color:var(--navy);
+}
+
+.section-subtitle{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.toolbar{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.search-box{
+    position:relative;
+}
+
+.search-box .icon{
+    position:absolute;
+    left:12px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#98a2b3;
+}
+
+.search-box input{
+    width:260px;
+    padding:10px 12px 10px 38px;
+    font-size:12px;
+}
+
+.btn{
+    border:0;
+    border-radius:9px;
+    padding:10px 13px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    font-size:11px;
+    font-weight:800;
+    transition:.18s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.btn-primary{
+    background:var(--blue);
+    color:#fff;
+    box-shadow:0 6px 14px rgba(47,128,237,.18);
+}
+
+.btn-dark{
+    background:var(--navy);
+    color:#fff;
+}
+
+.btn-light{
+    background:#f6f8fb;
+    color:#344054;
+    border:1px solid var(--border);
+}
+
+.btn-danger{
+    background:#fff1f2;
+    color:#dc2626;
+    border:1px solid #fecdd3;
+}
+
+.btn-success{
+    background:#ecfdf3;
+    color:#15803d;
+    border:1px solid #bbf7d0;
+}
+
+.btn-gold{
+    background:var(--gold);
+    color:#08111f;
+}
+
+/* TABLE */
+
+.table-wrap{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+}
+
+th{
+    text-align:left;
+    padding:12px 20px;
+    font-size:9px;
+    color:#667085;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    background:#fafbfc;
+    border-bottom:1px solid var(--border);
+}
+
+td{
+    padding:15px 20px;
+    border-bottom:1px solid #edf0f4;
+    font-size:12px;
+    vertical-align:middle;
+}
+
+tbody tr{
+    transition:.15s;
+}
+
+tbody tr:hover{
+    background:#fafcff;
+}
+
+.tracking{
+    font-weight:800;
+    color:var(--blue);
+    letter-spacing:.2px;
+}
+
+.route{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#344054;
+}
+
+.route-arrow{
+    color:#a0aec0;
+}
+
+.recipient{
+    font-weight:700;
+}
+
+.muted{
+    color:var(--muted);
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    border-radius:30px;
+    padding:5px 9px;
+    font-size:9px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.badge::before{
+    content:"";
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:currentColor;
+}
+
+.badge-processing{
+    color:#2563eb;
+    background:#eff6ff;
+}
+
+.badge-picked{
+    color:#7c3aed;
+    background:#f5f3ff;
+}
+
+.badge-transit{
+    color:#7c3aed;
+    background:#f5f3ff;
+}
+
+.badge-facility{
+    color:#0891b2;
+    background:#ecfeff;
+}
+
+.badge-hold{
+    color:#b45309;
+    background:#fffbeb;
+}
+
+.badge-customs{
+    color:#c2410c;
+    background:#fff7ed;
+}
+
+.badge-out{
+    color:#0284c7;
+    background:#f0f9ff;
+}
+
+.badge-delivered{
+    color:#15803d;
+    background:#ecfdf3;
+}
+
+.badge-returned,
+.badge-cancelled{
+    color:#dc2626;
+    background:#fef2f2;
+}
+
+.actions{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.icon-btn{
+    width:31px;
+    height:31px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:#fff;
+    color:#667085;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.icon-btn:hover{
+    background:#f6f8fb;
+    color:var(--blue);
+}
+
+.icon-btn.danger:hover{
+    color:var(--red);
+    background:#fff5f5;
+}
+
+/* =========================
+   FORMS
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:17px;
+}
+
+.form-grid.three{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.form-field.full{
+    grid-column:1/-1;
+}
+
+.form-field label{
+    display:block;
+    font-size:11px;
+    font-weight:800;
+    color:#344054;
+    margin-bottom:7px;
+}
+
+.form-field small{
+    display:block;
+    margin-top:5px;
+    font-size:9px;
+    color:#98a2b3;
+}
+
+.form-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:9px;
+    padding-top:5px;
+}
+
+.form-panel{
+    padding:24px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(3,10,20,.65);
+    backdrop-filter:blur(5px);
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal{
+    background:#fff;
+    width:100%;
+    max-width:780px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:18px;
+    box-shadow:0 30px 100px rgba(0,0,0,.35);
+}
+
+.modal-header{
+    padding:20px 23px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    background:#fff;
+    z-index:2;
+}
+
+.modal-title{
+    font-size:16px;
+    font-weight:850;
+    color:var(--navy);
+}
+
+.close-btn{
+    border:0;
+    background:#f5f7fa;
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#667085;
+}
+
+.modal-body{
+    padding:23px;
+}
+
+/* =========================
+   TIMELINE
+========================= */
+
+.timeline{
+    position:relative;
+    margin-top:10px;
+    padding-left:28px;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    left:7px;
+    top:5px;
+    bottom:5px;
+    width:1px;
+    background:#dce3ec;
+}
+
+.timeline-item{
+    position:relative;
+    padding-bottom:25px;
+}
+
+.timeline-dot{
+    position:absolute;
+    left:-28px;
+    top:3px;
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    background:#fff;
+    border:4px solid var(--blue);
+    box-shadow:0 0 0 3px rgba(47,128,237,.08);
+}
+
+.timeline-content{
+    background:#f8fafc;
+    border:1px solid #edf0f4;
+    padding:13px;
+    border-radius:10px;
+}
+
+.timeline-status{
+    font-size:11px;
+    font-weight:800;
+    color:var(--navy);
+}
+
+.timeline-message{
+    font-size:11px;
+    color:#667085;
+    margin-top:5px;
+    line-height:1.5;
+}
+
+.timeline-meta{
+    font-size:9px;
+    color:#98a2b3;
+    margin-top:8px;
+}
+
+/* =========================
+   DETAIL GRID
+========================= */
+
+.detail-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:24px;
+}
+
+.detail-card{
+    background:#f8fafc;
+    border:1px solid #edf0f4;
+    border-radius:10px;
+    padding:13px;
+}
+
+.detail-card small{
+    display:block;
+    color:#98a2b3;
+    text-transform:uppercase;
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:.8px;
+}
+
+.detail-card strong{
+    display:block;
+    margin-top:5px;
+    font-size:12px;
+    color:#1d2939;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    padding:55px 20px;
+    text-align:center;
+    color:#98a2b3;
+}
+
+.empty-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    background:#f3f6fa;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 12px;
+    color:#98a2b3;
+}
+
+.empty h3{
+    font-size:13px;
+    color:#667085;
+}
+
+.empty p{
+    font-size:11px;
+    margin-top:5px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast-container{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:300;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.toast{
+    min-width:280px;
+    max-width:380px;
+    background:#fff;
+    border:1px solid var(--border);
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+    border-radius:11px;
+    padding:13px 15px;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    animation:toastIn .25s ease;
+}
+
+.toast.success{
+    border-left:4px solid var(--green);
+}
+
+.toast.error{
+    border-left:4px solid var(--red);
+}
+
+.toast.info{
+    border-left:4px solid var(--blue);
+}
+
+.toast-title{
+    font-size:11px;
+    font-weight:800;
+}
+
+.toast-message{
+    font-size:10px;
+    color:#667085;
+    margin-top:3px;
+    line-height:1.4;
+}
+
+@keyframes toastIn{
+    from{
+        opacity:0;
+        transform:translateX(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+/* =========================
+   LOADER
+========================= */
+
+.loader-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(3px);
+    z-index:250;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.loader-box{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:18px 22px;
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.spinner{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    border:2px solid #dbe4ef;
+    border-top-color:var(--blue);
+    animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid.three{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:800px){
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .topbar{
+        padding:0 17px;
+    }
+
+    .content{
+        padding:18px;
+    }
+
+    .system-status{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat-card{
+        padding:15px;
+    }
+
+    .stat-value{
+        font-size:23px;
+    }
+
+    .section-header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .toolbar{
+        width:100%;
+    }
+
+    .search-box,
+    .search-box input{
+        width:100%;
+    }
+
+    .form-grid,
+    .form-grid.three{
+        grid-template-columns:1fr;
+    }
+
+    .form-field.full{
+        grid-column:auto;
+    }
+
+    .login-card{
+        padding:30px 23px;
+    }
+}
+
+@media(max-width:500px){
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .top-actions .btn span{
+        display:none;
+    }
+
+    .detail-grid{
+        grid-template-columns:1fr;
+    }
+
+    .modal{
+        max-height:94vh;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     LOGIN SCREEN
+========================= -->
+
+<div id="loginScreen" class="login-screen">
+
+    <div class="login-card">
+
+        <div class="brand">
+            <div class="brand-mark">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 18h18"/>
+                    <path d="M5 18V8l7-4 7 4v10"/>
+                    <path d="M9 18v-6h6v6"/>
+                    <path d="M3 21h18"/>
+                </svg>
+            </div>
+
+            <div>
+                <div class="brand-name">Meridian Cargo Group</div>
+                <div class="brand-sub">Logistics Operations</div>
+            </div>
+        </div>
+
+        <div class="login-heading">
+            <h1>Admin Portal</h1>
+            <p>
+                Secure access to shipment management,
+                tracking operations and logistics records.
+            </p>
+        </div>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+                <label class="form-label">Administrator Token</label>
+
+                <div class="input-wrap">
+
+                    <svg class="icon input-icon" viewBox="0 0 24 24">
+                        <rect x="3" y="11" width="18" height="10" rx="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+
+                    <input
+                        id="loginToken"
+                        type="password"
+                        autocomplete="current-password"
+                        placeholder="Enter your admin token"
+                        required
+                    >
+
+                </div>
+            </div>
+
+            <button class="login-btn" type="submit">
+                Sign In to Operations
+            </button>
+
+        </form>
+
+        <div class="security-note">
+            <strong>Security notice:</strong>
+            Your administrator token is used to authenticate
+            requests against the Meridian Cargo Group Apps Script API.
+            Never share the token publicly.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     APPLICATION
+========================= -->
+
+<div id="app" class="app hidden">
+
+    <!-- SIDEBAR -->
+
+    <aside id="sidebar" class="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="brand">
+
+                <div class="brand-mark">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M3 18h18"/>
+                        <path d="M5 18V8l7-4 7 4v10"/>
+                        <path d="M9 18v-6h6v6"/>
+                        <path d="M3 21h18"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <div class="brand-name">Meridian Cargo</div>
+                    <div class="brand-sub">Admin Operations</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <nav class="nav">
+
+            <div class="nav-section">Operations</div>
+
+            <button class="nav-item active" data-view="dashboard">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+                Dashboard
+            </button>
+
+            <button class="nav-item" data-view="shipments">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 7l9-4 9 4-9 4-9-4Z"/>
+                    <path d="M3 7v10l9 4 9-4V7"/>
+                    <path d="M12 11v10"/>
+                </svg>
+                Shipments
+            </button>
+
+            <button class="nav-item" data-view="create">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 8v8"/>
+                    <path d="M8 12h8"/>
+                </svg>
+                Create Shipment
+            </button>
+
+            <button class="nav-item" data-view="updates">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 5h16"/>
+                    <path d="M4 12h16"/>
+                    <path d="M4 19h10"/>
+                </svg>
+                Tracking Updates
+            </button>
+
+            <div class="nav-section" style="margin-top:25px;">System</div>
+
+            <button class="nav-item" id="refreshNav">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20 11a8 8 0 0 0-14.9-4"/>
+                    <path d="M4 4v5h5"/>
+                    <path d="M4 13a8 8 0 0 0 14.9 4"/>
+                    <path d="M20 20v-5h-5"/>
+                </svg>
+                Refresh Data
+            </button>
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <div class="admin-profile">
+
+                <div class="avatar">AD</div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <small>Operations Control</small>
+                </div>
+
+            </div>
+
+            <button id="logoutBtn" class="logout-btn">
+                Sign Out
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div style="display:flex;align-items:center;gap:13px;">
+
+                <button id="mobileMenu" class="mobile-menu">
+                    <svg class="icon-lg icon" viewBox="0 0 24 24">
+                        <path d="M4 6h16"/>
+                        <path d="M4 12h16"/>
+                        <path d="M4 18h16"/>
+                    </svg>
+                </button>
+
+                <div class="page-title">
+                    <h2 id="pageTitle">Operations Dashboard</h2>
+                    <p id="pageSubtitle">Real-time shipment management</p>
+                </div>
+
+            </div>
+
+            <div class="top-actions">
+
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    API Connected
+                </div>
+
+                <button id="headerRefresh" class="btn btn-light">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path d="M20 11a8 8 0 0 0-14.9-4"/>
+                        <path d="M4 4v5h5"/>
+                        <path d="M4 13a8 8 0 0 0 14.9 4"/>
+                        <path d="M20 20v-5h-5"/>
+                    </svg>
+                    <span>Refresh</span>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <div class="content">
+
+            <!-- =========================
+                 DASHBOARD VIEW
+            ========================= -->
+
+            <section id="view-dashboard" class="view">
+
+                <div class="stats">
+
+                    <div class="stat-card stat-total">
+
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M3 7l9-4 9 4-9 4-9-4Z"/>
+                                    <path d="M3 7v10l9 4 9-4V7"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="stat-label">Total Shipments</div>
+                        <div id="statTotal" class="stat-value">0</div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-transit">
+
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M3 16h13"/>
+                                    <path d="M16 8h3l3 4v4h-6V8Z"/>
+                                    <circle cx="7" cy="18" r="2"/>
+                                    <circle cx="18" cy="18" r="2"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="stat-label">In Transit</div>
+                        <div id="statTransit" class="stat-value">0</div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-hold">
+
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <path d="M9 8v8"/>
+                                    <path d="M15 8v8"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="stat-label">On Hold</div>
+                        <div id="statHold" class="stat-value">0</div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-delivered">
+
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m5 12 4 4L19 6"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="stat-label">Delivered</div>
+                        <div id="statDelivered" class="stat-value">0</div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="section">
+
+                    <div class="section-header">
+
+                        <div>
+                            <div class="section-title">Recent Shipments</div>
+                            <div class="section-subtitle">
+                                Latest records from the shipment database
+                            </div>
+                        </div>
+
+                        <div class="toolbar">
+
+                            <div class="search-box">
+
+                                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                    <circle cx="11" cy="11" r="7"/>
+                                    <path d="m20 20-4-4"/>
+                                </svg>
+
+                                <input
+                                    id="dashboardSearch"
+                                    type="search"
+                                    placeholder="Search tracking number..."
+                                >
+
+                            </div>
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="showView('create')"
+                            >
+                                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <path d="M12 8v8"/>
+                                    <path d="M8 12h8"/>
+                                </svg>
+                                New Shipment
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div id="dashboardTable"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 SHIPMENTS VIEW
+            ========================= -->
+
+            <section id="view-shipments" class="view hidden">
+
+                <div class="section">
+
+                    <div class="section-header">
+
+                        <div>
+                            <div class="section-title">Shipment Management</div>
+                            <div class="section-subtitle">
+                                Search, edit, update and manage all shipments
+                            </div>
+                        </div>
+
+                        <div class="toolbar">
+
+                            <div class="search-box">
+
+                                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                    <circle cx="11" cy="11" r="7"/>
+                                    <path d="m20 20-4-4"/>
+                                </svg>
+
+                                <input
+                                    id="shipmentSearch"
+                                    type="search"
+                                    placeholder="Search shipment..."
+                                >
+
+                            </div>
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="showView('create')"
+                            >
+                                + New
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div id="shipmentsTable"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 CREATE VIEW
+            ========================= -->
+
+            <section id="view-create" class="view hidden">
+
+                <div class="section">
+
+                    <div class="section-header">
+
+                        <div>
+                            <div class="section-title">
+                                Create New Shipment
+                            </div>
+
+                            <div class="section-subtitle">
+                                Register a new shipment in the Meridian Cargo database
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <form id="createForm" class="form-panel">
+
+                        <div class="form-grid">
+
+                            <div class="form-field">
+                                <label>Tracking Number *</label>
+                                <input
+                                    id="createTracking"
+                                    required
+                                    placeholder="MCG-2026-001245"
+                                >
+                                <small>Use a unique shipment reference.</small>
+                            </div>
+
+                            <div class="form-field">
+                                <label>Status *</label>
+
+                                <select id="createStatus" required>
+                                    <option>Processing</option>
+                                    <option>Picked Up</option>
+                                    <option>In Transit</option>
+                                    <option>At Facility</option>
+                                    <option>On Hold</option>
+                                    <option>Customs Clearance</option>
+                                    <option>Out for Delivery</option>
+                                    <option>Delivered</option>
+                                    <option>Returned</option>
+                                    <option>Cancelled</option>
+                                </select>
+                            </div>
+
+                            <div class="form-field">
+                                <label>Sender *</label>
+                                <input id="createSender" required>
+                            </div>
+
+                            <div class="form-field">
+                                <label>Recipient *</label>
+                                <input id="createRecipient" required>
+                            </div>
+
+                            <div class="form-field">
+                                <label>Origin *</label>
+                                <input
+                                    id="createOrigin"
+                                    required
+                                    placeholder="Lagos, Nigeria"
+                                >
+                            </div>
+
+                            <div class="form-field">
+                                <label>Destination *</label>
+                                <input
+                                    id="createDestination"
+                                    required
+                                    placeholder="Brussels, Belgium"
+                                >
+                            </div>
+
+                            <div class="form-field">
+                                <label>Current Location</label>
+                                <input
+                                    id="createLocation"
+                                    placeholder="Lagos Cargo Hub"
+                                >
+                            </div>
+
+                            <div class="form-field">
+                                <label>Estimated Delivery</label>
+                                <input
+                                    id="createDelivery"
+                                    placeholder="September 28, 2026"
+                                >
+                            </div>
+
+                            <div class="form-field full">
+                                <label>Shipment Description</label>
+                                <textarea
+                                    id="createDescription"
+                                    placeholder="Enter shipment description, package details or internal notes..."
+                                ></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions">
+
+                            <button
+                                type="button"
+                                class="btn btn-light"
+                                onclick="showView('dashboard')"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                Create Shipment
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 UPDATES VIEW
+            ========================= -->
+
+            <section id="view-updates" class="view hidden">
+
+                <div class="section">
+
+                    <div class="section-header">
+
+                        <div>
+                            <div class="section-title">
+                                Tracking Update Center
+                            </div>
+
+                            <div class="section-subtitle">
+                                Update shipment status, location and tracking history
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <form id="updateForm" class="form-panel">
+
+                        <div class="form-grid">
+
+                            <div class="form-field full">
+                                <label>Tracking Number *</label>
+                                <input
+                                    id="updateTracking"
+                                    required
+                                    placeholder="MCG-2026-001245"
+                                >
+                            </div>
+
+                            <div class="form-field">
+                                <label>New Status *</label>
+
+                                <select id="updateStatus" required>
+                                    <option>Processing</option>
+                                    <option>Picked Up</option>
+                                    <option>In Transit</option>
+                                    <option>At Facility</option>
+                                    <option>On Hold</option>
+                                    <option>Customs Clearance</option>
+                                    <option>Out for Delivery</option>
+                                    <option>Delivered</option>
+                                    <option>Returned</option>
+                                    <option>Cancelled</option>
+                                </select>
+                            </div>
+
+                            <div class="form-field">
+                                <label>Current Location *</label>
+                                <input
+                                    id="updateLocation"
+                                    required
+                                    placeholder="Lagos Cargo Hub"
+                                >
+                            </div>
+
+                            <div class="form-field">
+                                <label>Estimated Delivery</label>
+                                <input
+                                    id="updateDelivery"
+                                    placeholder="September 28, 2026"
+                                >
+                            </div>
+
+                            <div class="form-field">
+                                <label>Update Message *</label>
+                                <input
+                                    id="updateMessage"
+                                    required
+                                    placeholder="Shipment departed the facility."
+                                >
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                    <path d="m5 12 4 4L19 6"/>
+                                </svg>
+                                Publish Tracking Update
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div id="modalOverlay" class="modal-overlay hidden">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div id="modalTitle" class="modal-title">
+                Shipment
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M6 6l12 12"/>
+                    <path d="M18 6 6 18"/>
+                </svg>
+            </button>
+
+        </div>
+
+        <div id="modalBody" class="modal-body"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     LOADER
+========================= -->
+
+<div id="loader" class="loader-overlay hidden">
+
+    <div class="loader-box">
+
+        <div class="spinner"></div>
+
+        <span id="loaderText">
+            Processing...
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     TOASTS
+========================= -->
+
+<div id="toastContainer" class="toast-container"></div>
+
+
+<script>
+
+/* =========================================================
+   MERIDIAN CARGO GROUP ADMIN DASHBOARD
+   ========================================================= */
+
+/*
+ IMPORTANT:
+ Replace this URL with your deployed Google Apps Script Web App URL.
+ Example:
+ https://script.google.com/macros/s/XXXXXXXXXXXX/exec
+*/
+
+const API_URL =
+    "https://script.google.com/macros/s/AKfycbxTE40gFl536dRopWxBxmDIQG4B0Qu3B0U2615CMJsyZHfD7aVc3ajk3x36ew7kD86Q/exec";
+
+
+/* =========================================================
+   APPLICATION STATE
+========================================================= */
+
+let adminToken =
+    localStorage.getItem("mcg_admin_token") || "";
+
+let shipments = [];
+
+let currentView =
+    "dashboard";
+
+
+/* =========================================================
+   DOM HELPERS
+========================================================= */
+
+const $ = id =>
+    document.getElementById(id);
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+function showLoader(message = "Processing...") {
+
+    $("loaderText").textContent = message;
+
+    $("loader").classList.remove("hidden");
+}
+
+
+function hideLoader() {
+
+    $("loader").classList.add("hidden");
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(
+    title,
+    message,
+    type = "success"
+){
+
+    const container =
+        $("toastContainer");
+
+    const item =
+        document.createElement("div");
+
+    item.className =
+        `toast ${type}`;
+
+    item.innerHTML = `
+
+        <div>
+
+            <div class="toast-title">
+                ${escapeHtml(title)}
+            </div>
+
+            <div class="toast-message">
+                ${escapeHtml(message)}
+            </div>
+
+        </div>
+
+    `;
+
+    container.appendChild(item);
+
+    setTimeout(() => {
+
+        item.style.opacity = "0";
+        item.style.transform =
+            "translateX(20px)";
+
+        setTimeout(() => item.remove(), 250);
+
+    }, 4000);
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* =========================================================
+   API
+========================================================= */
+
+async function apiPost(payload){
+
+    if(
+        !API_URL ||
+        API_URL ===
+        "YOUR_APPS_SCRIPT_WEB_APP_URL"
+    ){
+        throw new Error(
+            "Apps Script API URL has not been configured."
+        );
+    }
+
+    let response;
+
+    try{
+
+        response = await fetch(
+            API_URL,
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+                },
+
+                body:
+                    JSON.stringify(payload)
+            }
+        );
+
+    }
+    catch(error){
+
+        throw new Error(
+            "Could not connect to the Apps Script API. " +
+            "Check the Web App deployment and API URL."
+        );
+    }
+
+
+    const raw =
+        await response.text();
+
+
+    console.log(
+        "Meridian API response:",
+        raw
+    );
+
+
+    if(!raw){
+
+        throw new Error(
+            "The Apps Script API returned an empty response."
+        );
+    }
+
+
+    let data;
+
+    try{
+
+        data =
+            JSON.parse(raw);
+
+    }
+    catch(error){
+
+        console.error(
+            "Non-JSON API response:",
+            raw
+        );
+
+        throw new Error(
+            "Apps Script returned an invalid response. " +
+            "Make sure the Web App URL ends with /exec and " +
+            "the deployment is accessible to anyone."
+        );
+    }
+
+
+    if(!data.success){
+
+        throw new Error(
+            data.message ||
+            "The operation could not be completed."
+        );
+    }
+
+
+    return data;
+}
+
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
+
+async function authenticate(token){
+
+    const data =
+        await apiPost({
+            action:"authenticate",
+            token:token
+        });
+
+    return data.success === true;
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+$("loginForm")
+.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        const token =
+            $("loginToken").value.trim();
+
+        if(!token){
+            toast(
+                "Token Required",
+                "Please enter your administrator token.",
+                "error"
+            );
+            return;
+        }
+
+        try{
+
+            showLoader(
+                "Authenticating administrator..."
+            );
+
+            await authenticate(token);
+
+            adminToken = token;
+
+            localStorage.setItem(
+                "mcg_admin_token",
+                token
+            );
+
+            $("loginScreen")
+                .classList.add("hidden");
+
+            $("app")
+                .classList.remove("hidden");
+
+            await loadShipments();
+
+            toast(
+                "Welcome",
+                "Administrator authentication successful."
+            );
+
+        }
+        catch(error){
+
+            toast(
+                "Authentication Failed",
+                error.message,
+                "error"
+            );
+
+        }
+        finally{
+
+            hideLoader();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIAL AUTH CHECK
+========================================================= */
+
+async function initialize(){
+
+    if(!adminToken){
+
+        $("loginScreen")
+            .classList.remove("hidden");
+
+        $("app")
+            .classList.add("hidden");
+
+        return;
+    }
+
+    try{
+
+        showLoader(
+            "Verifying session..."
+        );
+
+        await authenticate(
+            adminToken
+        );
+
+        $("loginScreen")
+            .classList.add("hidden");
+
+        $("app")
+            .classList.remove("hidden");
+
+        await loadShipments();
+
+    }
+    catch(error){
+
+        localStorage.removeItem(
+            "mcg_admin_token"
+        );
+
+        adminToken = "";
+
+        $("loginScreen")
+            .classList.remove("hidden");
+
+        $("app")
+            .classList.add("hidden");
+
+    }
+    finally{
+
+        hideLoader();
+
+    }
+}
+
+
+/* =========================================================
+   LOAD SHIPMENTS
+========================================================= */
+
+async function loadShipments(){
+
+    try{
+
+        showLoader(
+            "Loading shipment records..."
+        );
+
+        const data =
+            await apiPost({
+                action:"list",
+                token:adminToken
+            });
+
+        shipments =
+            Array.isArray(data.shipments)
+                ? data.shipments
+                : [];
+
+        renderStatistics();
+
+        renderShipmentTables();
+
+    }
+    catch(error){
+
+        toast(
+            "Data Loading Error",
+            error.message,
+            "error"
+        );
+
+    }
+    finally{
+
+        hideLoader();
+
+    }
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+function renderStatistics(){
+
+    const total =
+        shipments.length;
+
+    const transit =
+        shipments.filter(
+            s =>
+                normalizeStatus(s.status)
+                === "in transit"
+        ).length;
+
+    const hold =
+        shipments.filter(
+            s =>
+                normalizeStatus(s.status)
+                === "on hold"
+        ).length;
+
+    const delivered =
+        shipments.filter(
+            s =>
+                normalizeStatus(s.status)
+                === "delivered"
+        ).length;
+
+    $("statTotal")
+        .textContent = total;
+
+    $("statTransit")
+        .textContent = transit;
+
+    $("statHold")
+        .textContent = hold;
+
+    $("statDelivered")
+        .textContent = delivered;
+}
+
+
+/* =========================================================
+   STATUS HELPERS
+========================================================= */
+
+function normalizeStatus(status){
+
+    return String(status || "")
+        .trim()
+        .toLowerCase();
+}
+
+
+function statusClass(status){
+
+    const s =
+        normalizeStatus(status);
+
+    if(s === "processing")
+        return "badge-processing";
+
+    if(s === "picked up")
+        return "badge-picked";
+
+    if(s === "in transit")
+        return "badge-transit";
+
+    if(s === "at facility")
+        return "badge-facility";
+
+    if(s === "on hold")
+        return "badge-hold";
+
+    if(s === "customs clearance")
+        return "badge-customs";
+
+    if(s === "out for delivery")
+        return "badge-out";
+
+    if(s === "delivered")
+        return "badge-delivered";
+
+    if(s === "returned")
+        return "badge-returned";
+
+    if(s === "cancelled")
+        return "badge-cancelled";
+
+    return "badge-processing";
+}
+
+
+function statusBadge(status){
+
+    return `
+        <span class="badge ${statusClass(status)}">
+            ${escapeHtml(status || "Unknown")}
+        </span>
+    `;
+}
+
+
+/* =========================================================
+   TABLE DATA
+========================================================= */
+
+function filteredShipments(search){
+
+    const q =
+        String(search || "")
+            .trim()
+            .toLowerCase();
+
+    if(!q)
+        return shipments;
+
+    return shipments.filter(s => {
+
+        return [
+            s.trackingNumber,
+            s.sender,
+            s.recipient,
+            s.origin,
+            s.destination,
+            s.status,
+            s.currentLocation
+        ]
+        .some(value =>
+            String(value || "")
+                .toLowerCase()
+                .includes(q)
+        );
+
+    });
+}
+
+
+/* =========================================================
+   SHIPMENT TABLE
+========================================================= */
+
+function shipmentTable(list){
+
+    if(!list.length){
+
+        return `
+            <div class="empty">
+
+                <div class="empty-icon">
+
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="m20 20-4-4"/>
+                    </svg>
+
+                </div>
+
+                <h3>No shipments found</h3>
+
+                <p>
+                    No shipment records match your search.
+                </p>
+
+            </div>
+        `;
+
+    }
+
+
+    return `
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Tracking</th>
+                        <th>Recipient</th>
+                        <th>Route</th>
+                        <th>Status</th>
+                        <th>Location</th>
+                        <th>Updated</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    ${list.map(s => `
+
+                        <tr>
+
+                            <td>
+                                <div class="tracking">
+                                    ${escapeHtml(s.trackingNumber)}
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="recipient">
+                                    ${escapeHtml(s.recipient)}
+                                </div>
+                                <div class="muted">
+                                    ${escapeHtml(s.sender)}
+                                </div>
+                            </td>
+
+                            <td>
+
+                                <div class="route">
+
+                                    <span>
+                                        ${escapeHtml(s.origin)}
+                                    </span>
+
+                                    <span class="route-arrow">
+                                        →
+                                    </span>
+
+                                    <span>
+                                        ${escapeHtml(s.destination)}
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                ${statusBadge(s.status)}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    s.currentLocation || "—"
+                                )}
+                            </td>
+
+                            <td>
+                                <span class="muted">
+                                    ${escapeHtml(
+                                        s.lastUpdated || "—"
+                                    )}
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="icon-btn"
+                                        title="View history"
+                                        onclick="viewShipment('${jsEscape(s.trackingNumber)}')"
+                                    >
+                                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="9"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+                                    </button>
+
+                                    <button
+                                        class="icon-btn"
+                                        title="Edit shipment"
+                                        onclick="editShipment('${jsEscape(s.trackingNumber)}')"
+                                    >
+                                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                            <path d="M12 20h9"/>
+                                            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>
+                                        </svg>
+                                    </button>
+
+                                    <button
+                                        class="icon-btn"
+                                        title="Add update"
+                                        onclick="openUpdate('${jsEscape(s.trackingNumber)}')"
+                                    >
+                                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                            <path d="M4 5h16"/>
+                                            <path d="M4 12h16"/>
+                                            <path d="M4 19h10"/>
+                                        </svg>
+                                    </button>
+
+                                    <button
+                                        class="icon-btn danger"
+                                        title="Delete"
+                                        onclick="deleteShipment('${jsEscape(s.trackingNumber)}')"
+                                    >
+                                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                            <path d="M4 7h16"/>
+                                            <path d="M10 11v6"/>
+                                            <path d="M14 11v6"/>
+                                            <path d="M6 7l1 14h10l1-14"/>
+                                            <path d="M9 7V4h6v3"/>
+                                        </svg>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    `).join("")}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   RENDER TABLES
+========================================================= */
+
+function renderShipmentTables(){
+
+    const dashboardSearch =
+        $("dashboardSearch")
+            ? $("dashboardSearch").value
+            : "";
+
+    const shipmentSearch =
+        $("shipmentSearch")
+            ? $("shipmentSearch").value
+            : "";
+
+    const dashboardList =
+        filteredShipments(
+            dashboardSearch
+        ).slice(0,10);
+
+    const fullList =
+        filteredShipments(
+            shipmentSearch
+        );
+
+    $("dashboardTable")
+        .innerHTML =
+            shipmentTable(dashboardList);
+
+    $("shipmentsTable")
+        .innerHTML =
+            shipmentTable(fullList);
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+$("dashboardSearch")
+.addEventListener(
+    "input",
+    renderShipmentTables
+);
+
+$("shipmentSearch")
+.addEventListener(
+    "input",
+    renderShipmentTables
+);
+
+
+/* =========================================================
+   CREATE SHIPMENT
+========================================================= */
+
+$("createForm")
+.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        const payload = {
+
+            action:"create",
+
+            token:adminToken,
+
+            trackingNumber:
+                $("createTracking").value.trim(),
+
+            sender:
+                $("createSender").value.trim(),
+
+            recipient:
+                $("createRecipient").value.trim(),
+
+            origin:
+                $("createOrigin").value.trim(),
+
+            destination:
+                $("createDestination").value.trim(),
+
+            status:
+                $("createStatus").value,
+
+            currentLocation:
+                $("createLocation").value.trim(),
+
+            estimatedDelivery:
+                $("createDelivery").value.trim(),
+
+            description:
+                $("createDescription").value.trim()
+
+        };
+
+
+        try{
+
+            showLoader(
+                "Creating shipment..."
+            );
+
+            await apiPost(payload);
+
+            toast(
+                "Shipment Created",
+                `${payload.trackingNumber} has been added successfully.`
+            );
+
+            $("createForm").reset();
+
+            await loadShipments();
+
+            showView("shipments");
+
+        }
+        catch(error){
+
+            toast(
+                "Creation Failed",
+                error.message,
+                "error"
+            );
+
+        }
+        finally{
+
+            hideLoader();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   EDIT SHIPMENT
+========================================================= */
+
+function editShipment(trackingNumber){
+
+    const shipment =
+        shipments.find(
+            s =>
+                s.trackingNumber ===
+                trackingNumber
+        );
+
+    if(!shipment){
+
+        toast(
+            "Not Found",
+            "Shipment could not be found.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    $("modalTitle").textContent =
+        "Edit Shipment";
+
+
+    $("modalBody").innerHTML = `
+
+        <form id="editForm">
+
+            <div class="form-grid">
+
+                <div class="form-field full">
+                    <label>Tracking Number</label>
+                    <input
+                        id="editTracking"
+                        value="${escapeHtml(shipment.trackingNumber)}"
+                        readonly
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label>Sender</label>
+                    <input
+                        id="editSender"
+                        value="${escapeHtml(shipment.sender)}"
+                        required
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label>Recipient</label>
+                    <input
+                        id="editRecipient"
+                        value="${escapeHtml(shipment.recipient)}"
+                        required
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label>Origin</label>
+                    <input
+                        id="editOrigin"
+                        value="${escapeHtml(shipment.origin)}"
+                        required
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label>Destination</label>
+                    <input
+                        id="editDestination"
+                        value="${escapeHtml(shipment.destination)}"
+                        required
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label>Status</label>
+
+                    <select id="editStatus">
+
+                        ${statusOptions(
+                            shipment.status
+                        )}
+
+                    </select>
+
+                </div>
+
+                <div class="form-field">
+                    <label>Current Location</label>
+                    <input
+                        id="editLocation"
+                        value="${escapeHtml(shipment.currentLocation)}"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label>Estimated Delivery</label>
+                    <input
+                        id="editDelivery"
+                        value="${escapeHtml(shipment.estimatedDelivery)}"
+                    >
+                </div>
+
+                <div class="form-field full">
+                    <label>Description</label>
+
+                    <textarea id="editDescription">${escapeHtml(
+                        shipment.description
+                    )}</textarea>
+
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-light"
+                    onclick="closeModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    `;
+
+
+    $("modalOverlay")
+        .classList.remove("hidden");
+
+
+    $("editForm")
+        .addEventListener(
+            "submit",
+            async function(event){
+
+                event.preventDefault();
+
+                try{
+
+                    showLoader(
+                        "Saving shipment..."
+                    );
+
+                    await apiPost({
+
+                        action:"update",
+
+                        token:adminToken,
+
+                        trackingNumber:
+                            $("editTracking").value,
+
+                        sender:
+                            $("editSender").value.trim(),
+
+                        recipient:
+                            $("editRecipient").value.trim(),
+
+                        origin:
+                            $("editOrigin").value.trim(),
+
+                        destination:
+                            $("editDestination").value.trim(),
+
+                        status:
+                            $("editStatus").value,
+
+                        currentLocation:
+                            $("editLocation").value.trim(),
+
+                        estimatedDelivery:
+                            $("editDelivery").value.trim(),
+
+                        description:
+                            $("editDescription").value.trim(),
+
+                        message:
+                            "Shipment information updated by administrator."
+
+                    });
+
+
+                    closeModal();
+
+                    toast(
+                        "Shipment Updated",
+                        `${trackingNumber} has been updated successfully.`
+                    );
+
+                    await loadShipments();
+
+                }
+                catch(error){
+
+                    toast(
+                        "Update Failed",
+                        error.message,
+                        "error"
+                    );
+
+                }
+                finally{
+
+                    hideLoader();
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   STATUS OPTIONS
+========================================================= */
+
+function statusOptions(selected){
+
+    const statuses = [
+        "Processing",
+        "Picked Up",
+        "In Transit",
+        "At Facility",
+        "On Hold",
+        "Customs Clearance",
+        "Out for Delivery",
+        "Delivered",
+        "Returned",
+        "Cancelled"
+    ];
+
+    return statuses.map(status => `
+
+        <option
+            ${status === selected ? "selected" : ""}
+        >
+            ${status}
+        </option>
+
+    `).join("");
+
+}
+
+
+/* =========================================================
+   VIEW SHIPMENT / HISTORY
+========================================================= */
+
+async function viewShipment(trackingNumber){
+
+    try{
+
+        showLoader(
+            "Loading shipment history..."
+        );
+
+        const data =
+            await apiPost({
+
+                action:"get",
+
+                token:adminToken,
+
+                trackingNumber:
+                    trackingNumber
+
+            });
+
+
+        const shipment =
+            data.shipment;
+
+        const history =
+            Array.isArray(data.history)
+                ? data.history
+                : [];
+
+
+        $("modalTitle").textContent =
+            `Shipment ${shipment.trackingNumber}`;
+
+
+        $("modalBody").innerHTML = `
+
+            <div class="detail-grid">
+
+                <div class="detail-card">
+                    <small>Tracking Number</small>
+                    <strong>
+                        ${escapeHtml(
+                            shipment.trackingNumber
+                        )}
+                    </strong>
+                </div>
+
+                <div class="detail-card">
+                    <small>Status</small>
+                    <strong>
+                        ${statusBadge(
+                            shipment.status
+                        )}
+                    </strong>
+                </div>
+
+                <div class="detail-card">
+                    <small>Sender</small>
+                    <strong>
+                        ${escapeHtml(
+                            shipment.sender
+                        )}
+                    </strong>
+                </div>
+
+                <div class="detail-card">
+                    <small>Recipient</small>
+                    <strong>
+                        ${escapeHtml(
+                            shipment.recipient
+                        )}
+                    </strong>
+                </div>
+
+                <div class="detail-card">
+                    <small>Origin</small>
+                    <strong>
+                        ${escapeHtml(
+                            shipment.origin
+                        )}
+                    </strong>
+                </div>
+
+                <div class="detail-card">
+                    <small>Destination</small>
+                    <strong>
+                        ${escapeHtml(
+                            shipment.destination
+                        )}
+                    </strong>
+                </div>
+
+                <div class="detail-card">
+                    <small>Current Location</small>
+                    <strong>
+                        ${escapeHtml(
+                            shipment.currentLocation
+                        )}
+                    </strong>
+                </div>
+
+                <div class="detail-card">
+                    <small>Estimated Delivery</small>
+                    <strong>
+                        ${escapeHtml(
+                            shipment.estimatedDelivery
+                        )}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div style="
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                margin-bottom:12px;
+            ">
+
+                <div>
+
+                    <div class="section-title">
+                        Tracking History
+                    </div>
+
+                    <div class="section-subtitle">
+                        Chronological shipment events
+                    </div>
+
+                </div>
+
+                <button
+                    class="btn btn-light"
+                    onclick="copyTracking('${jsEscape(
+                        shipment.trackingNumber
+                    )}')"
+                >
+                    Copy Tracking
+                </button>
+
+            </div>
+
+
+            <div class="timeline">
+
+                ${
+                    history.length
+                    ?
+                    history.map(event => `
+
+                        <div class="timeline-item">
+
+                            <div class="timeline-dot"></div>
+
+                            <div class="timeline-content">
+
+                                <div class="timeline-status">
+
+                                    ${escapeHtml(
+                                        event.status ||
+                                        "Update"
+                                    )}
+
+                                </div>
+
+                                <div class="timeline-message">
+
+                                    ${escapeHtml(
+                                        event.message ||
+                                        "Shipment update recorded."
+                                    )}
+
+                                </div>
+
+                                <div class="timeline-meta">
+
+                                    ${escapeHtml(
+                                        event.date || ""
+                                    )}
+
+                                    ${event.time
+                                        ? " • " +
+                                          escapeHtml(event.time)
+                                        : ""
+                                    }
+
+                                    ${
+                                        event.location
+                                        ? " • " +
+                                          escapeHtml(
+                                              event.location
+                                          )
+                                        : ""
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `).join("")
+                    :
+                    `
+
+                        <div class="empty">
+
+                            <h3>
+                                No tracking events
+                            </h3>
+
+                            <p>
+                                No tracking history has been recorded yet.
+                            </p>
+
+                        </div>
+
+                    `
+                }
+
+            </div>
+
+        `;
+
+
+        $("modalOverlay")
+            .classList.remove("hidden");
+
+    }
+    catch(error){
+
+        toast(
+            "History Error",
+            error.message,
+            "error"
+        );
+
+    }
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE CENTER
+========================================================= */
+
+function openUpdate(trackingNumber){
+
+    showView("updates");
+
+    $("updateTracking")
+        .value =
+            trackingNumber;
+
+    const shipment =
+        shipments.find(
+            s =>
+                s.trackingNumber ===
+                trackingNumber
+        );
+
+    if(shipment){
+
+        $("updateStatus")
+            .value =
+                shipment.status ||
+                "In Transit";
+
+        $("updateLocation")
+            .value =
+                shipment.currentLocation ||
+                "";
+
+        $("updateDelivery")
+            .value =
+                shipment.estimatedDelivery ||
+                "";
+
+        $("updateMessage")
+            .focus();
+
+    }
+
+}
+
+
+/* =========================================================
+   ADD TRACKING UPDATE
+========================================================= */
+
+$("updateForm")
+.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        const trackingNumber =
+            $("updateTracking")
+                .value.trim();
+
+        const status =
+            $("updateStatus").value;
+
+        const location =
+            $("updateLocation")
+                .value.trim();
+
+        const delivery =
+            $("updateDelivery")
+                .value.trim();
+
+        const message =
+            $("updateMessage")
+                .value.trim();
+
+
+        if(!trackingNumber ||
+           !location ||
+           !message){
+
+            toast(
+                "Missing Information",
+                "Tracking number, location and update message are required.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        try{
+
+            showLoader(
+                "Publishing tracking update..."
+            );
+
+
+            await apiPost({
+
+                action:"update",
+
+                token:adminToken,
+
+                trackingNumber:
+                    trackingNumber,
+
+                status:
+                    status,
+
+                currentLocation:
+                    location,
+
+                estimatedDelivery:
+                    delivery,
+
+                message:
+                    message
+
+            });
+
+
+            toast(
+                "Tracking Updated",
+                `New tracking event published for ${trackingNumber}.`
+            );
+
+
+            $("updateMessage")
+                .value = "";
+
+            await loadShipments();
+
+        }
+        catch(error){
+
+            toast(
+                "Update Failed",
+                error.message,
+                "error"
+            );
+
+        }
+        finally{
+
+            hideLoader();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+async function deleteShipment(trackingNumber){
+
+    const confirmed =
+        window.confirm(
+            `Delete shipment ${trackingNumber}?\n\n` +
+            `This action cannot be undone.`
+        );
+
+    if(!confirmed)
+        return;
+
+
+    try{
+
+        showLoader(
+            "Deleting shipment..."
+        );
+
+
+        await apiPost({
+
+            action:"delete",
+
+            token:adminToken,
+
+            trackingNumber:
+                trackingNumber
+
+        });
+
+
+        toast(
+            "Shipment Deleted",
+            `${trackingNumber} has been removed.`
+        );
+
+
+        await loadShipments();
+
+    }
+    catch(error){
+
+        toast(
+            "Delete Failed",
+            error.message,
+            "error"
+        );
+
+    }
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+
+/* =========================================================
+   COPY TRACKING
+========================================================= */
+
+async function copyTracking(trackingNumber){
+
+    try{
+
+        await navigator.clipboard
+            .writeText(trackingNumber);
+
+        toast(
+            "Copied",
+            `${trackingNumber} copied to clipboard.`
+        );
+
+    }
+    catch(error){
+
+        toast(
+            "Copy Failed",
+            "Unable to copy tracking number.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function closeModal(){
+
+    $("modalOverlay")
+        .classList.add("hidden");
+
+    $("modalBody")
+        .innerHTML = "";
+
+}
+
+
+$("modalOverlay")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            $("modalOverlay")
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+const viewMeta = {
+
+    dashboard:{
+        title:"Operations Dashboard",
+        subtitle:"Real-time shipment management"
+    },
+
+    shipments:{
+        title:"Shipment Management",
+        subtitle:"Search and manage shipment records"
+    },
+
+    create:{
+        title:"Create Shipment",
+        subtitle:"Register a new shipment"
+    },
+
+    updates:{
+        title:"Tracking Update Center",
+        subtitle:"Publish shipment tracking events"
+    }
+
+};
+
+
+function showView(view){
+
+    currentView = view;
+
+    document
+        .querySelectorAll(".view")
+        .forEach(element =>
+            element.classList.add("hidden")
+        );
+
+
+    const target =
+        $("view-" + view);
+
+    if(target)
+        target.classList.remove("hidden");
+
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(item =>
+            item.classList.remove("active")
+        );
+
+
+    const nav =
+        document.querySelector(
+            `.nav-item[data-view="${view}"]`
+        );
+
+    if(nav)
+        nav.classList.add("active");
+
+
+    if(viewMeta[view]){
+
+        $("pageTitle")
+            .textContent =
+                viewMeta[view].title;
+
+        $("pageSubtitle")
+            .textContent =
+                viewMeta[view].subtitle;
+
+    }
+
+
+    $("sidebar")
+        .classList.remove("open");
+
+}
+
+
+/* Navigation buttons */
+
+document
+    .querySelectorAll(".nav-item[data-view]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () =>
+                showView(
+                    button.dataset.view
+                )
+        );
+
+    });
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+$("headerRefresh")
+.addEventListener(
+    "click",
+    loadShipments
+);
+
+$("refreshNav")
+.addEventListener(
+    "click",
+    loadShipments
+);
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+$("mobileMenu")
+.addEventListener(
+    "click",
+    () => {
+
+        $("sidebar")
+            .classList.toggle("open");
+
+    }
+);
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+$("logoutBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        localStorage.removeItem(
+            "mcg_admin_token"
+        );
+
+        adminToken = "";
+
+        shipments = [];
+
+        $("app")
+            .classList.add("hidden");
+
+        $("loginScreen")
+            .classList.remove("hidden");
+
+        $("loginToken")
+            .value = "";
+
+        toast(
+            "Signed Out",
+            "Your administrator session has ended.",
+            "info"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CSV EXPORT
+========================================================= */
+
+function exportCSV(){
+
+    if(!shipments.length){
+
+        toast(
+            "Nothing to Export",
+            "There are no shipment records available.",
+            "info"
+        );
+
+        return;
+    }
+
+
+    const headers = [
+        "Tracking Number",
+        "Sender",
+        "Recipient",
+        "Origin",
+        "Destination",
+        "Status",
+        "Current Location",
+        "Estimated Delivery",
+        "Last Updated",
+        "Description"
+    ];
+
+
+    const rows =
+        shipments.map(s => [
+
+            s.trackingNumber,
+            s.sender,
+            s.recipient,
+            s.origin,
+            s.destination,
+            s.status,
+            s.currentLocation,
+            s.estimatedDelivery,
+            s.lastUpdated,
+            s.description
+
+        ]);
+
+
+    const csv = [
+        headers,
+        ...rows
+    ]
+    .map(row =>
+        row.map(value =>
+            `"${String(value || "")
+                .replace(/"/g,'""')}"`
+        ).join(",")
+    )
+    .join("\n");
+
+
+    const blob =
+        new Blob(
+            [csv],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "meridian-cargo-shipments.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+
+function jsEscape(value){
+
+    return String(value || "")
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'")
+        .replace(/\n/g,"\\n")
+        .replace(/\r/g,"\\r");
+}
+
+
+/* =========================================================
+   KEYBOARD SHORTCUT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+initialize();
+
+</script>
+
+</body>
+</html>
