@@ -1,0 +1,55 @@
+MERIDIAN CARGO GROUP — EMAIL AUTOMATION SETUP
+
+1. Google Sheets
+   Keep your existing Shipments sheet with:
+   TrackingNumber | Sender | Recipient | Origin | Destination | Status | CurrentLocation | EstimatedDelivery | LastUpdated | Description
+
+   The updated Code.gs automatically adds:
+   CustomerEmail
+
+   Keep TrackingEvents as:
+   TrackingNumber | Date | Time | Location | Status | Message
+
+   The script automatically creates EmailLog the first time email automation runs.
+
+2. Apps Script
+   Replace your existing Code.gs with the supplied Code.gs.
+   Deploy/update the Web App:
+   - Execute as: Me
+   - Who has access: Anyone
+   - Use the /exec URL
+
+3. Customer tracking URL
+   In Code.gs, replace:
+   CONFIG.TRACKING_URL: "https://YOUR-DOMAIN.com/"
+   with the real public URL of your Meridian Cargo customer tracking page.
+
+4. Gmail/Mail authorization
+   The first time an email is sent, Google Apps Script will request authorization for MailApp.
+   Authorize the script under the Google account that owns the Apps Script project.
+
+5. Admin dashboard
+   The updated admin.html includes a Customer Email field when creating and editing shipments.
+   Enter a valid customer email to enable automatic notifications.
+
+6. Automatic notifications
+   Shipment creation -> Shipment Created template
+   Picked Up -> Shipment Picked Up template
+   In Transit -> In Transit template
+   Customs Clearance -> Customs Clearance template
+   On Hold -> On Hold template
+   Out for Delivery -> Out for Delivery template
+   Delivered -> Delivered template
+   Returned/Cancelled -> Shipment Exception template
+   Other updates -> Shipment Update template
+
+7. Duplicate protection
+   Each TrackingEvents row receives a unique EmailLog event key. The same tracking event will not be emailed twice.
+
+8. Security
+   Move ADMIN_TOKEN into Apps Script Project Settings > Script Properties and set:
+   ADMIN_TOKEN = your long random secret
+   The fallback token in CONFIG should be changed or removed for production.
+
+9. GitHub
+   Do NOT upload Code.gs containing a real production admin token to a public GitHub repository.
