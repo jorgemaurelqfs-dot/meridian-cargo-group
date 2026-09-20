@@ -1736,7 +1736,9 @@
               <textarea id="contactMessage" placeholder="How can we help you?" required></textarea>
             </div>
           </div>
-          <button class="btn btn-primary" type="submit">Prepare enquiry →</button>
+          <button class="btn btn-primary" type="submit" id="contactSubmitButton">
+  Send enquiry →
+</button>
           <p class="form-message" id="contactMessageResult" role="status"></p>
         </form>
       </div>
@@ -2121,8 +2123,83 @@
       });
     });
 
-    $("contactForm").addEventListener("submit", (event) => {
-      event.preventDefault();
+    $("contactForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const form = $("contactForm");
+  const button = $("contactSubmitButton");
+  const result = $("contactMessageResult");
+
+  const name = $("contactName").value.trim();
+  const email = $("contactEmail").value.trim();
+  const subject = $("contactSubject").value.trim();
+  const message = $("contactMessage").value.trim();
+
+  result.textContent = "";
+  result.style.color = "";
+
+  if (!name || !email || !message) {
+    result.textContent = "Please complete all required fields.";
+    result.style.color = "var(--danger)";
+    return;
+  }
+
+  if (!API_URL) {
+    result.textContent =
+      "The enquiry service is not connected. Please contact support directly.";
+    result.style.color = "var(--danger)";
+    return;
+  }
+
+  const originalText = button.textContent;
+
+  button.disabled = true;
+  button.textContent = "Sending…";
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "submitEnquiry",
+        name: name,
+        email: email,
+        subject: subject,
+        message: message
+      })
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(
+        data.message || "Unable to submit your enquiry."
+      );
+    }
+
+    result.textContent =
+      "Thank you. Your enquiry has been submitted successfully. Our support team will contact you shortly.";
+
+    result.style.color = "var(--success)";
+
+    form.reset();
+
+  } catch (error) {
+    console.error("Enquiry submission error:", error);
+
+    result.textContent =
+      error.message ||
+      "We could not submit your enquiry. Please try again.";
+
+    result.style.color = "var(--danger)";
+
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+});
 
       const name = $("contactName").value.trim();
       const email = $("contactEmail").value.trim();
